@@ -12,7 +12,7 @@ class Raster {
   teken() {
     push();
     noFill();
-    stroke('grey');
+    stroke('blue');
     for (var rij = 0; rij < this.aantalRijen; rij++) {
       for (var kolom = 0; kolom < this.aantalKolommen; kolom++) {
         rect(kolom * this.celGrootte, rij * this.celGrootte, this.celGrootte, this.celGrootte);
@@ -104,7 +104,7 @@ function setup() {
   textFont("Verdana");
   textSize(90);
 
-  raster = new Raster(6, 9);
+  raster = new Raster(12, 18);
 
   raster.berekenCelGrootte();
 
