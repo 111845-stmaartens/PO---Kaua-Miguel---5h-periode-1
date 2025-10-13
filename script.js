@@ -12,13 +12,20 @@ class Raster {
   teken() {
     push();
     noFill();
-    stroke('blue');
+    stroke('gray');
     for (var rij = 0; rij < this.aantalRijen; rij++) {
       for (var kolom = 0; kolom < this.aantalKolommen; kolom++) {
         rect(kolom * this.celGrootte, rij * this.celGrootte, this.celGrootte, this.celGrootte);
+        
       }
     }
     pop();
+    push();
+    stroke('blue');
+     strokeWeight(15)
+    noFill();
+    rect(0, 0, 900, 600);
+   pop();
   }
 }
 
@@ -33,19 +40,19 @@ class Jos {
   }
 
   beweeg() {
-    if (keyIsDown(LEFT_ARROW)) {
+    if (keyIsDown(87)) {
       this.x -= this.stapGrootte;
       this.frameNummer = 2;
     }
-    if (keyIsDown(RIGHT_ARROW)) {
+    if (keyIsDown(65)) {
       this.x += this.stapGrootte;
       this.frameNummer = 1;
     }
-    if (keyIsDown(UP_ARROW)) {
+    if (keyIsDown(83)) {
       this.y -= this.stapGrootte;
       this.frameNummer = 4;
     }
-    if (keyIsDown(DOWN_ARROW)) {
+    if (keyIsDown(68)) {
       this.y += this.stapGrootte;
       this.frameNummer = 5;
     }
@@ -114,14 +121,19 @@ function setup() {
     frameEve = loadImage("images/sprites/Eve100px/Eve_" + b + ".png");
     eve.animatie.push(frameEve);
   }
-
+  
   alice = new Vijand(700, 200);
   alice.stapGrootte = 1 * eve.stapGrootte;
   alice.sprite = loadImage("images/sprites/Alice100px/Alice.png");
+  
 
   bob = new Vijand(600, 400);
   bob.stapGrootte = 1 * eve.stapGrootte;
   bob.sprite = loadImage("images/sprites/Bob100px/Bob.png");
+
+  cindy = new Vijand(500,300);
+  cindy.stapGrootte = 1 * eve.stapGrootte;
+  cindy.sprite = loadImage("images/sprites/Alice100px/Alice.png");
 }
 
 function draw() {
@@ -130,12 +142,16 @@ function draw() {
   eve.beweeg();
   alice.beweeg();
   bob.beweeg();
+  cindy.beweeg();
   eve.toon();
   alice.toon();
   bob.toon();
-
-  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
+  cindy.toon();
+  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob) || eve.wordtGeraakt(cindy)){
     noLoop();
+    background('red');
+    fill('white');
+    text("Je bent geraakt!", 30, 300);
   }
 
   if (eve.gehaald) {
@@ -143,5 +159,6 @@ function draw() {
     fill('white');
     text("Je hebt gewonnen!", 30, 300);
     noLoop();
+
   }
 }
