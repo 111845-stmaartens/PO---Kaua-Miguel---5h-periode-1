@@ -98,8 +98,30 @@ class Vijand {
   toon() {
     image(this.sprite, this.x, this.y, raster.celGrootte, raster.celGrootte);
   }
+} 
+  class Bom {
+    constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.sprite = null;
+    this.stapGrootte = null;
+    this.snelheid = 1
 }
 
+  beweeg() {
+    this.x += floor(random(-1, 2)) * this.stapGrootte;
+    this.y += floor(random(-1, 2)) * this.stapGrootte;
+
+    this.x = constrain(this.x, 0, canvas.width - raster.celGrootte);
+    this.y = constrain(this.y, 0, canvas.height - raster.celGrootte);
+
+    this.x += this.snelheid;
+  }
+
+  toon() {
+    image(this.sprite, this.x, this.y, raster.celGrootte, raster.celGrootte);
+  }
+    }
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
 }
@@ -134,6 +156,15 @@ function setup() {
   cindy = new Vijand(500,300);
   cindy.stapGrootte = 1 * eve.stapGrootte;
   cindy.sprite = loadImage("images/sprites/Alice100px/Alice.png");
+
+  bom1 = new Vijand(600,600);
+  bom1.stapGrootte = 1 * eve.stapGrootte;
+  bom1.sprite = loadImage("images/sprites/bom_100px.png");
+
+  bom2 = new Vijand(800,100);
+  bom2.stapGrootte = 1 * eve.stapGrootte;
+  bom2.sprite = loadImage("images/sprites/bom_100px.png");
+  
 }
 
 function draw() {
@@ -143,11 +174,15 @@ function draw() {
   alice.beweeg();
   bob.beweeg();
   cindy.beweeg();
+  bom1.beweeg();
+  bom2.beweeg();
   eve.toon();
   alice.toon();
   bob.toon();
   cindy.toon();
-  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob) || eve.wordtGeraakt(cindy)){
+  bom1.toon();
+  bom2.toon();
+  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob) || eve.wordtGeraakt(cindy) || eve.wordtGeraakt(bom1) || eve.wordtGeraakt(bom2)){
     noLoop();
     background('red');
     fill('white');
