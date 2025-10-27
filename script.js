@@ -1,3 +1,29 @@
+var bal = {
+  diameter: 40,
+  straal: null,
+  x: null,
+  y: null,
+  snelheidX: 50,
+  snelheidY: 50,
+
+  beweeg() {
+    this.x += this.snelheidX;
+    this.y += this.snelheidY;
+
+    if (this.x < this.straal || this.x > canvas.width - this.straal) {
+      this.snelheidX *= -1;
+    }
+    if (this.y < this.straal || this.y > canvas.height - this.straal) {
+      this.snelheidY *= -1;
+    }
+  },
+
+  teken() {
+    fill(150,65,255,);
+    ellipse(this.x,this.y,this.diameter);
+  }
+}
+
 class Raster {
   constructor(r, k) {
     this.aantalRijen = r;
@@ -100,17 +126,21 @@ class Vijand {
   }
 } 
   class Bom {
-    constructor(x, y) {
+    constructor(x, y, speed) {
     this.x = x;
     this.y = y;
     this.sprite = null;
     this.stapGrootte = null;
-    this.snelheid = 1
+    this.snelheid = speed;
+      // bom1 beweeg op en neer
+      // bom2 beweeg op en neer
+      // bom1 snelheid = 1
+      // bom2 snelheid = 2
 }
 
   beweeg() {
-    this.x += floor(random(-1, 2)) * this.stapGrootte;
-    this.y += floor(random(-1, 2)) * this.stapGrootte;
+    this.x += floor(vertical(-1, 2)) * this.stapGrootte;
+    this.y += floor(vertical(-1, 2)) * this.stapGrootte;
 
     this.x = constrain(this.x, 0, canvas.width - raster.celGrootte);
     this.y = constrain(this.y, 0, canvas.height - raster.celGrootte);
@@ -121,7 +151,8 @@ class Vijand {
   toon() {
     image(this.sprite, this.x, this.y, raster.celGrootte, raster.celGrootte);
   }
-    }
+}
+
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
 }
@@ -182,6 +213,8 @@ function draw() {
   cindy.toon();
   bom1.toon();
   bom2.toon();
+  bal.beweeg();
+  bal.teken();
   if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob) || eve.wordtGeraakt(cindy) || eve.wordtGeraakt(bom1) || eve.wordtGeraakt(bom2)){
     noLoop();
     background('red');
